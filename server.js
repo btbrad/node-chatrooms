@@ -13,7 +13,7 @@ function send404 (response) {
 function sendFile (response, filePath, fileContents) {
   response.writeHead(
     200,
-    { 'Content-Type': mime.lookup(path.basename(filePath)) }
+    { 'Content-Type': mime.getType(path.basename(filePath)) }
   )
   response.end(fileContents)
 }
