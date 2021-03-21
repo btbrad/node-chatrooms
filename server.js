@@ -4,6 +4,8 @@ const path = require('path')
 const mime = require('mime')
 const cache = {}
 
+const chatServer = require('./lib/chat_server')
+
 function send404 (response) {
   response.writeHead(404, { 'Content-Type': 'text/plain' })
   response.write('Error 404: resource not found')
@@ -53,3 +55,6 @@ const server = http.createServer((request, response) => {
 server.listen(3000, () => {
   console.log('Server listening on port 3000.')
 })
+
+// socket.io服务器
+chatServer.listen(server)
