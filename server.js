@@ -4,7 +4,7 @@ const path = require('path')
 const mime = require('mime')
 const cache = {}
 
-const chatServer = require('./lib/chat_server')
+const chatServer = require('./public/lib/chat_server')
 
 function send404 (response) {
   response.writeHead(404, { 'Content-Type': 'text/plain' })
@@ -15,7 +15,7 @@ function send404 (response) {
 function sendFile (response, filePath, fileContents) {
   response.writeHead(
     200,
-    { 'Content-Type': mime.getType(path.basename(filePath)) }
+    { 'Content-Type': mime.lookup(path.basename(filePath)) }
   )
   response.end(fileContents)
 }
@@ -48,6 +48,7 @@ const server = http.createServer((request, response) => {
   } else {
     filePath = `public${request.url}`
   }
+  console.log(filePath)
   const absPath = `./${filePath}`
   serveStatic(response, cache, absPath)
 })
